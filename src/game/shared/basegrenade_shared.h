@@ -30,7 +30,7 @@ class CTakeDamageInfo;
 
 //Tony; Compromise! in episodic single player, inherit CBaseCombatCharacter for the barnacle interaction, otherwise this will never get called.
 class CBaseGrenade : 
-	#if defined( HL2_EPISODIC )
+	#if defined( HL2_EPISODIC ) || defined( HL2MP )
 		public CBaseCombatCharacter
 	#else
 		public CBaseAnimating
@@ -38,8 +38,12 @@ class CBaseGrenade :
 	#if defined( GAME_DLL )
 		, public CDefaultPlayerPickupVPhysics
 	#endif
-{		//Tony; the ugliest class definition ever, but it saves characters, or something. Should I be shot for this?
-	DECLARE_CLASS( CBaseGrenade, CBaseAnimating );
+{		// FIX: Declare CBaseGrenade as CBaseCombatCharacter under episodic and hl2mp
+	#if defined( HL2_EPISODIC ) || defined( HL2MP )
+		DECLARE_CLASS( CBaseGrenade, CBaseCombatCharacter );
+	#else
+		DECLARE_CLASS( CBaseGrenade, CBaseAnimating );
+	#endif
 public:
 
 	CBaseGrenade(void);

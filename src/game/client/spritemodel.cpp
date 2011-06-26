@@ -439,7 +439,8 @@ void CEngineSprite::DrawFrame( int frame, int x, int y, const wrect_t *prcSubRec
 void CEngineSprite::DrawFrameOfSize( int frame, int x, int y, int iWidth, int iHeight, const wrect_t *prcSubRect )
 {
 	// FIXME: If we ever call this with AVIs, need to have it call GetTexCoordRange and make that work
-	Assert( !IsAVI() && !IsBIK() );
+	// FIXME: IsBIK is not defined, commenting it out is a quick fix but might cause problems.
+	Assert( !IsAVI() /* && !IsBIK() */);
 
 	float fLeft = 0;
 	float fRight = 1;

@@ -122,3 +122,35 @@ void UpdateFullScreenDepthTexture( void )
 		pRenderContext->OverrideDepthEnable( false, true );
 	}
 }
+
+// Night-vision
+static void ScreenOver_f(void){
+	// Load the material
+	// TODO: Change material for teams
+	IMaterial *nvMaterial = materials->FindMaterial("HUD/Neutral_Nightvision_Overlay", TEXTURE_GROUP_OTHER, true);
+	{
+		static bool nvDisplayed = false;
+		
+		// If the night-vision is not enabled
+		if(nvDisplayed){
+			view->SetScreenOverlayMaterial(null);
+			cvar->FindVar("mat_fullbright")->SetValue(0);
+			CLocalPlayerFilter filter;
+			// TODO: Sound
+		}else{
+		// If the night vision is enabled
+			view->SetScreenOverlayMaterial(nvMaterial);
+			cvar->FindVar("mat_fullbright")->SetValue(1);
+			CLocalPlayerFilter filter;
+			//TODO: Sound
+		}
+
+		nvDisplayed = !nvDisplayed;
+
+		if(cvar->FindVar("mat_fullbright")->GetInt() == 1){
+			cvar->FindVar("mat_fullbright")->SetValue(0);
+		}
+	}
+}
+
+static ConCommand r_screenover("r_screenover", ScreenOver_f);
